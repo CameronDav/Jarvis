@@ -1,4 +1,5 @@
 import pyttsx3 #pip install pyttsx3 == Text-Speech
+import datetime
 
 engine = pyttsx3.init()
 
@@ -18,9 +19,16 @@ def getvoices(voice):
 
     speak("hello with is jarvis")
 
+def time():
+    Time = datetime.datetime.now().strftime("%I:%M:%S") #I=Hours M=minutes S=seconds
+    speak("The Current Time Is:")
+    speak(Time)
 
-while True:
-    voice = int(input("Press 1 for male\nPress 2 for female\n"))
+
+#while True:
+   # voice = int(input("Press 1 for male\nPress 2 for female\n"))
     # speak(audio)
 
-    getvoices(voice)
+    #getvoices(voice)
+
+time()
