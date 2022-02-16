@@ -1,3 +1,4 @@
+from calendar import month
 import pyttsx3 #pip install pyttsx3 == Text-Speech
 import datetime
 
@@ -24,6 +25,15 @@ def time():
     speak("The Current Time Is:")
     speak(Time)
 
+def date():
+    year = int(datetime.datetime.now().year)
+    month = int(datetime.datetime.now().month)
+    date = int(datetime.datetime.now().day)
+    speak("The current date is:")
+    speak(date)
+    speak(month)
+    speak(year)
+
 
 #while True:
    # voice = int(input("Press 1 for male\nPress 2 for female\n"))
@@ -31,4 +41,5 @@ def time():
 
     #getvoices(voice)
 
-time()
+#time()
+date()
