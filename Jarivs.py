@@ -87,14 +87,13 @@ def takeCommandMic():
         return "None"
     return query 
 
-def sendEmail():
+def sendEmail(content):
     server = smtplib.SMTP('smtp.gmail.com', 587)
     server.starttls()
     server.login(senderemail, epwd)
-    server.sendmail(senderemail, to, 'hello this is a email from jarvis')
+    server.sendmail(senderemail, to, content)
     server.close()
 
-sendEmail()
 
 if __name__ == "__main__":
     getvoices(1)
@@ -106,3 +105,17 @@ if __name__ == "__main__":
 
         elif 'date' in query:
             date()
+        elif 'email' in query:
+            try:
+                speak('what should i say')
+                content = takeCommandMic()
+                sendEmail(content)
+                speak('email has been sent')
+            except Exception as e:
+                print(e)
+                speak("unable to send email.")
+        elif 'offline' in query:
+            quit()
+
+
+
