@@ -1,6 +1,9 @@
 from calendar import month
 import pyttsx3 #pip install pyttsx3 == Text-Speech
 import datetime
+import speech_recognition as sr # pip install SpeechRecognition.
+import smtplib 
+from secrets import senderemail, epwd, to 
 
 engine = pyttsx3.init()
 
@@ -13,12 +16,13 @@ def getvoices(voice):
     # print(voices[0].id)
     if voice == 1:
         engine.setProperty('voice', voices[0].id)
-
+        speak("hello with is jarvis")
 
     if voice == 2:
         engine.setProperty('voice', voices[1].id)
+        speak("hello with is Martha")
 
-    speak("hello with is jarvis")
+    
 
 def time():
     Time = datetime.datetime.now().strftime("%I:%M:%S") #I=Hours M=minutes S=seconds
@@ -34,12 +38,71 @@ def date():
     speak(month)
     speak(year)
 
+def greeting():
+    hour = datetime.datetime.now().hour
+    if hour >= 6 and hour <12:
+        speak("good morning sir")
+    elif hour >= 12 and hour <12:
+        speak("good afternoon sir")
+    elif hour >=18 and hour <24:
+        speak("Good evening sir")
+    else:
+        speak("good Night sire")
 
-#while True:
+def wishme():
+    speak("welcome back sir!")
+   # time()
+   # date()
+    greeting()
+    speak("I am at your service, please tell me how i can help you?")
+
+
+#while True:F
    # voice = int(input("Press 1 for male\nPress 2 for female\n"))
     # speak(audio)
 
     #getvoices(voice)
 
 #time()
-date()
+#date()
+#wishme()
+
+def takeCommandCmd():
+    query = input("please tell can how i can help you?\n")
+    return query
+
+def takeCommandMic():
+    r = sr.Recognizer()
+    with sr.Microphone() as source:
+        print("listening...")
+        r.pause_threshold = 1
+        audio = r.listen(source)
+    try:
+        print("recognizing...")
+        query = r.recognize_google(audio , language='en-ZA')
+        print(query)
+    except Exception as e:
+        print(e)
+        speak("please say that again!")
+        return "None"
+    return query 
+
+def sendEmail():
+    server = smtplib.SMTP('smtp.gmail.com', 587)
+    server.starttls()
+    server.login(senderemail, epwd)
+    server.sendmail(senderemail, to, 'hello this is a email from jarvis')
+    server.close()
+
+sendEmail()
+
+if __name__ == "__main__":
+    getvoices(1)
+    wishme()
+    while True:
+        query = takeCommandMic().lower()
+        if 'time' in query:
+            time()
+
+        elif 'date' in query:
+            date()
