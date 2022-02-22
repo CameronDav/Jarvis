@@ -1,9 +1,12 @@
 from calendar import month
+import email
+from unicodedata import name
 import pyttsx3 #pip install pyttsx3 == Text-Speech
 import datetime
 import speech_recognition as sr # pip install SpeechRecognition.
 import smtplib 
-from secrets import senderemail, epwd, to 
+from secrets import senderemail, epwd, to
+from email.message import EmailMessage
 
 engine = pyttsx3.init()
 
@@ -47,13 +50,13 @@ def greeting():
     elif hour >=18 and hour <24:
         speak("Good evening sir")
     else:
-        speak("good Night sire")
+        speak("good Night sir")
 
 def wishme():
-    speak("welcome back sir!")
+   # speak("Welcome back sir!")
    # time()
    # date()
-    greeting()
+   # greeting()
     speak("I am at your service, please tell me how i can help you?")
 
 
@@ -87,16 +90,21 @@ def takeCommandMic():
         return "None"
     return query 
 
-def sendEmail(content):
+def sendEmail(receiver ,subject, content):
     server = smtplib.SMTP('smtp.gmail.com', 587)
     server.starttls()
     server.login(senderemail, epwd)
-    server.sendmail(senderemail, to, content)
+    email = EmailMessage()
+    email['from'] = senderemail
+    email['to'] = receiver
+    email['subject'] = subject
+    email.set_content(content)
+    server.send_message(email)
     server.close()
 
 
 if __name__ == "__main__":
-    getvoices(1)
+    getvoices(2)
     wishme()
     while True:
         query = takeCommandMic().lower()
@@ -106,10 +114,18 @@ if __name__ == "__main__":
         elif 'date' in query:
             date()
         elif 'email' in query:
+            email_list = {  #Email Addresses go hear..... In future try and create a csv file containing all emails address.
+                'Cameron' : 'cameron.davids@younglings.africa', 'Russell' : 'russel.magaya@younglings.africa'
+            }
             try:
+                speak("To who should i send a email to?")
+                name = takeCommandMic()
+                reciever = email_list[name]
+                speak("what is the subject of this email?")
+                subject = takeCommandMic()
                 speak('what should i say')
                 content = takeCommandMic()
-                sendEmail(content)
+                sendEmail(reciever, subject, content)
                 speak('email has been sent')
             except Exception as e:
                 print(e)
