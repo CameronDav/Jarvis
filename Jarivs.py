@@ -7,6 +7,9 @@ import speech_recognition as sr # pip install SpeechRecognition.
 import smtplib 
 from secrets import senderemail, epwd, to
 from email.message import EmailMessage
+import pyautogui
+import webbrowser as wb
+from time import sleep
 
 engine = pyttsx3.init()
 
@@ -103,6 +106,13 @@ def sendEmail(receiver ,subject, content):
     server.close()
 
 
+def sendwhatsappmsg(phone_no, message):
+    message = message
+    wb.open('https://web.whatsapp.com/send?phone=' +phone_no+'&text='+message)
+    sleep(10)
+    pyautogui.press('enter')
+
+
 if __name__ == "__main__":
     getvoices(2)
     wishme()
@@ -116,6 +126,7 @@ if __name__ == "__main__":
         elif 'email' in query:
             email_list = {  #Email Addresses go hear..... In future try and create a csv file containing all emails address.
                 'Cameron' : 'cameron.davids@younglings.africa', 'Russell' : 'russel.magaya@younglings.africa'
+
             }
             try:
                 speak("To who should i send a email to?")
@@ -130,6 +141,31 @@ if __name__ == "__main__":
             except Exception as e:
                 print(e)
                 speak("unable to send email.")
+
+
+        elif'message' in query:
+            user_name = {
+                'Cameron': '+27 61 441 9347',
+                'mo': '+27 84 682 2539',
+                'Josh': '+27 65 873 8753',
+                'Russell' : '+27 68 161 7207',
+                'Tristan' : '+27 67 963 9611'
+
+            }
+            try:
+                speak("To who should i send a whatsapp Message?")
+                name = takeCommandMic()
+                phone_number = user_name[name]
+                speak("what is the Message?")
+                message = takeCommandMic()
+                sendwhatsappmsg(phone_number,message)
+                speak('Whatsapp message has been sent')
+            except Exception as e:
+                print(e)
+                speak("Whatsapp message unseuccesful!")
+
+
+
         elif 'offline' in query:
             quit()
 
