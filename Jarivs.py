@@ -113,6 +113,11 @@ def sendwhatsappmsg(phone_no, message):
     #sleep(10)
     pyautogui.press('enter')
 
+def searchgoogle():
+    speak('what should i search for?')
+    search = takeCommandMic()
+    wb.open('https://www.google.com/search?q=' +search)
+
 
 if __name__ == "__main__":
     getvoices(2)
@@ -165,12 +170,15 @@ if __name__ == "__main__":
                 print(e)
                 speak("Whatsapp message unsuccesful!")
 
-        elif 'search' in query:
+        elif 'wikipedia' in query:
             speak('searching on wikipedia...')
             query = query. replace("wikipedia", "")
             result = wikipedia.summary(query, sentences = 2)
             print(result) 
             speak(result)
+
+        elif 'search' in query:
+            searchgoogle()
 
 
 
