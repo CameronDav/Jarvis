@@ -11,6 +11,7 @@ import pyautogui
 import webbrowser as wb
 from time import sleep
 import wikipedia
+import pywhatkit
 
 engine = pyttsx3.init()
 
@@ -179,6 +180,11 @@ if __name__ == "__main__":
 
         elif 'search' in query:
             searchgoogle()
+
+        elif 'youtube' in query:
+            speak("what should I play on youtube?")
+            topic = takeCommandMic()
+            pywhatkit.playonyt(topic)
 
 
 
