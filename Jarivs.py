@@ -207,9 +207,5 @@ if __name__ == "__main__":
             speak('Temperature :{} degree celcius'.format(temp))
             speak('wearther is{}'.format(desp))
 
-
         elif 'offline' in query:
             quit()
-
-
-
