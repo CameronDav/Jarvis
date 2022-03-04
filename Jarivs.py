@@ -10,6 +10,7 @@ from email.message import EmailMessage
 import pyautogui
 import webbrowser as wb
 from time import sleep
+import wikipedia
 
 engine = pyttsx3.init()
 
@@ -109,7 +110,7 @@ def sendEmail(receiver ,subject, content):
 def sendwhatsappmsg(phone_no, message):
     message = message
     wb.open('https://web.whatsapp.com/send?phone=' +phone_no+'&text='+message)
-    sleep(10)
+    #sleep(10)
     pyautogui.press('enter')
 
 
@@ -162,7 +163,14 @@ if __name__ == "__main__":
                 speak('Whatsapp message has been sent')
             except Exception as e:
                 print(e)
-                speak("Whatsapp message unseuccesful!")
+                speak("Whatsapp message unsuccesful!")
+
+        elif 'search' in query:
+            speak('searching on wikipedia...')
+            query = query. replace("wikipedia", "")
+            result = wikipedia.summary(query, sentences = 2)
+            print(result) 
+            speak(result)
 
 
 
