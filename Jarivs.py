@@ -12,6 +12,7 @@ import webbrowser as wb
 from time import sleep
 import wikipedia
 import pywhatkit
+import requests
 
 engine = pyttsx3.init()
 
@@ -114,6 +115,8 @@ def sendwhatsappmsg(phone_no, message):
     #sleep(10)
     pyautogui.press('enter')
 
+    #https://api.openweathermap.org/data/2.5/weather?q=cape%20town,ZA&units=imperial&appid=b51e50c858815a087f5080752a24fc45
+
 def searchgoogle():
     speak('what should i search for?')
     search = takeCommandMic()
@@ -186,6 +189,23 @@ if __name__ == "__main__":
             topic = takeCommandMic()
             pywhatkit.playonyt(topic)
 
+        elif 'weather' in query:
+            city = 'Cape Town'
+            url = f'https://api.openweathermap.org/data/2.5/weather?q={city}&units=imperial&appid=b51e50c858815a087f5080752a24fc45'
+
+            res = requests.get(url)
+            data = res.json()
+
+            weather = data['weather'] [0] ['main']
+            temp = data['main']['temp']
+            desp = data['weather'][0] ['description']
+            temp = round((temp -32) * 5/9) 
+            print(weather)
+            print(temp)
+            print(desp)
+            speak(f'weather in {city} city is')
+            speak('Temperature :{} degree celcius'.format(temp))
+            speak('wearther is{}'.format(desp))
 
 
         elif 'offline' in query:
