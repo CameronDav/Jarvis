@@ -13,6 +13,8 @@ from time import sleep
 import wikipedia
 import pywhatkit
 import requests
+from newsapi import NewsApiClient
+import clipboard 
 
 engine = pyttsx3.init()
 
@@ -96,7 +98,7 @@ def takeCommandMic():
         return "None"
     return query 
 
-def sendEmail(receiver ,subject, content):
+def sendEmail(receiver ,subject, content):                         # Send Email
     server = smtplib.SMTP('smtp.gmail.com', 587)
     server.starttls()
     server.login(senderemail, epwd)
@@ -109,7 +111,7 @@ def sendEmail(receiver ,subject, content):
     server.close()
 
 
-def sendwhatsappmsg(phone_no, message):
+def sendwhatsappmsg(phone_no, message):                          # Send Whatsapp message
     message = message
     wb.open('https://web.whatsapp.com/send?phone=' +phone_no+'&text='+message)
     #sleep(10)
@@ -121,6 +123,37 @@ def searchgoogle():
     speak('what should i search for?')
     search = takeCommandMic()
     wb.open('https://www.google.com/search?q=' +search)
+
+def news():
+    newsapi = NewsApiClient(api_key='a71bcc16634f4230b4ff06b67d2538cb')
+    speak('what topic would you like to know about?')
+    topic = takeCommandMic()
+    data = newsapi.get_top_headlines(q='topic',
+                                    language = 'en', 
+                                    page_size = 5) 
+                                    
+    newsdata = data['articles']                    
+    for x,y in enumerate(newsdata):
+        print(f'{x}{y["description"]}')
+        speak((f'{x}{y["description"]}'))
+
+    speak("thats it for now ill update you sometime later.")
+
+
+def text2speech():
+    text = clipboard.paste()
+    print(text)
+    speak(text)
+
+
+def covid():
+    r = requests.get('https://coronavirus-19-api.herokuapp.com/all')
+
+    data = r.json()
+    covid_data = f'Confirmed Cases: {data["cases"]} \n Deaths: {data["deaths"]} \n Recovered: {data["recovered"]}'
+    print(covid_data)
+    speak(covid_data)
+
 
 
 if __name__ == "__main__":
@@ -206,6 +239,17 @@ if __name__ == "__main__":
             speak(f'weather in {city} city is')
             speak('Temperature :{} degree celcius'.format(temp))
             speak('wearther is{}'.format(desp))
+
+
+        elif 'news' in query:
+            news()
+
+
+        elif 'read' in query:
+            text2speech()
+
+        elif 'covid' in query:
+            covid()
 
         elif 'offline' in query:
             quit()
