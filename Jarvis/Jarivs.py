@@ -18,6 +18,8 @@ from newsapi import NewsApiClient
 import clipboard 
 import os
 import pyjokes
+import string
+import random
 
 engine = pyttsx3.init()
 
@@ -164,6 +166,25 @@ def covid():
     print(covid_data)
     speak(covid_data)
 
+def passwordgen():
+    s1 = string.ascii_uppercase
+    s2 = string.ascii_lowercase
+    s3 = string.digits
+    s4 = string.punctuation
+
+    passlen = 8
+    s = []
+    s.extend(list(s1))
+    s.extend(list(s2))
+    s.extend(list(s3))
+    s.extend(list(s4))
+
+    random.shuffle(s)
+    newpass = ("".join(s[0:passlen]))
+    print(newpass)
+    speak(newpass)
+    
+
 
 
 if __name__ == "__main__":
@@ -273,6 +294,9 @@ if __name__ == "__main__":
 
         elif 'screenshot' in query:
             screenshot()
+
+        elif 'password' in query:
+            passwordgen()
 
         elif 'offline' in query:
             quit()
