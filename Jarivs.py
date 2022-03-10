@@ -18,6 +18,7 @@ from newsapi import NewsApiClient
 import clipboard 
 import os
 import pyjokes
+import time as tt
 
 engine = pyttsx3.init()
 
@@ -119,6 +120,13 @@ def sendwhatsappmsg(phone_no, message):                          # Send Whatsapp
     wb.open('https://web.whatsapp.com/send?phone=' +phone_no+'&text='+message)
     #sleep(10)
     pyautogui.press('enter')
+
+
+def screenshot():
+    name_img = tt.time()
+    name_img = f'C:\\Users\camer\\Documents\\GitHub\\Jarvis\\screeshots\\{name_img}.png'
+    img = pyautogui.screenshot(name_img)
+    img.show()
 
     #https://api.openweathermap.org/data/2.5/weather?q=cape%20town,ZA&units=imperial&appid=b51e50c858815a087f5080752a24fc45
 
@@ -263,6 +271,9 @@ if __name__ == "__main__":
 
         elif 'joke' in query:
             speak(pyjokes.get_joke())
+
+        elif 'screenshot' in query:
+            screenshot()
 
         elif 'offline' in query:
             quit()
