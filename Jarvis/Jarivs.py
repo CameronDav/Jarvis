@@ -20,6 +20,7 @@ import os
 import pyjokes
 import string
 import random
+import psutil
 
 engine = pyttsx3.init()
 
@@ -183,6 +184,14 @@ def passwordgen():
     newpass = ("".join(s[0:passlen]))
     print(newpass)
     speak(newpass)
+
+
+def cpu():
+    usage = str(psutil.cpu_percent())
+    speak('CPU is at' +usage)
+    battery = psutil.sensors_battery()
+    speak("battery is at")
+    speak(battery)
     
 
 
@@ -294,9 +303,14 @@ if __name__ == "__main__":
 
         elif 'screenshot' in query:
             screenshot()
+            speak("Done!")
 
         elif 'password' in query:
             passwordgen()
+
+
+        elif 'cpu' in query:
+            cpu() 
 
         elif 'offline' in query:
             quit()
