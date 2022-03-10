@@ -1,5 +1,6 @@
 from calendar import month
 import email
+import queue
 from unicodedata import name
 import pyttsx3 #pip install pyttsx3 == Text-Speech
 import datetime
@@ -15,6 +16,7 @@ import pywhatkit
 import requests
 from newsapi import NewsApiClient
 import clipboard 
+import os
 
 engine = pyttsx3.init()
 
@@ -251,5 +253,13 @@ if __name__ == "__main__":
         elif 'covid' in query:
             covid()
 
+        elif 'open' in query:
+            os.system('explorer C://{}'.format(query.replace('open','')))
+
+        elif 'open code' in query:
+            codepath = 'C:\\Users\\camer\\AppData\Local\\Programs\\Microsoft VS Code\\Code.exe'
+            os.startfile(codepath)
+
         elif 'offline' in query:
+
             quit()
