@@ -275,5 +275,17 @@ if __name__ == "__main__":
         elif 'screenshot' in query:
             screenshot()
 
+        elif 'remind me later' in query:
+            speak("What should I remember?")
+            data = takeCommandMic()
+            speak("You said I Must remind you that" +data)
+            remember = open('data.txt', 'w')
+            remember.write(data)
+            remember.close()
+
+        elif 'do you know anything' in query:
+            remember = open('data.txt', 'r')
+            speak("you told me to remind you that" +remember.read())
+
         elif 'offline' in query:
             quit()
