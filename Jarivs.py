@@ -17,6 +17,7 @@ import requests
 from newsapi import NewsApiClient
 import clipboard 
 import os
+import pyjokes
 
 engine = pyttsx3.init()
 
@@ -253,13 +254,15 @@ if __name__ == "__main__":
         elif 'covid' in query:
             covid()
 
-        elif 'open' in query:
+        elif 'open' in query:                              #open all from file explorer
             os.system('explorer C://{}'.format(query.replace('open','')))
 
-        elif 'open code' in query:
+        elif 'open code' in query:                         #open VScode
             codepath = 'C:\\Users\\camer\\AppData\Local\\Programs\\Microsoft VS Code\\Code.exe'
             os.startfile(codepath)
 
-        elif 'offline' in query:
+        elif 'joke' in query:
+            speak(pyjokes.get_joke())
 
+        elif 'offline' in query:
             quit()
